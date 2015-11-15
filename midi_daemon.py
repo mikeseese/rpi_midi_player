@@ -34,7 +34,7 @@ while True:
   # check if we want to pause or play
   # MIDI_PLAY file says we want to play.
   # MIDI_PAUSE file is not used by script but exists for consistency
-  play_music = os.path.isfile(daemon_location + "MIDI_PLAY");
+  play_music = os.path.isfile(daemon_location + "MIDI_PLAY")
 
   # check if we want to go previous or back
   go_previous = os.path.isfile(daemon_location + "MIDI_PREV")
@@ -56,9 +56,9 @@ while True:
 
   # remove flags for prev/next controls
   if(go_previous):
-    os.remove(daemon_location + "MIDI_PREV");
+    os.remove(daemon_location + "MIDI_PREV")
   if(go_next):
-    os.remove(daemon_location + "MIDI_NEXT");
+    os.remove(daemon_location + "MIDI_NEXT")
 
 
   sleep(0.1)
