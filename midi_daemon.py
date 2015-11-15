@@ -7,7 +7,7 @@ media_host = "192.168.1.202"
 
 daemon_location = "/home/pi/midi_daemon/"
 
-playlists = {
+playlist_locations = {
   "classics" : "/home/mike/media/midi/classics/",
   "holidays" : "/home/mike/media/midi/holidays/",
   "general" : "/home/mike/media/midi/general/",
@@ -21,7 +21,7 @@ while True:
     next_playlist = content_file.read()
 
   if(next_playlist != current_playlist):
-    if(playlists.has_key(current_playlist):
+    if(playlist_locations.has_key(current_playlist):
       current_playlist = next_playlist
       # stop current song
       # remove songs
