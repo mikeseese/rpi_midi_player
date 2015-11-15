@@ -6,161 +6,112 @@
     <title>Foundation | Welcome</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
+    <script type="text/javascript">
+      var playlists = {
+        "classics" : "/home/mike/media/midi/classics/",
+        "holidays" : "/home/mike/media/midi/holidays/",
+        "general" : "/home/mike/media/midi/general/",
+      };
+
+      function toggle_play_pause() {
+        if(document.getElementById("play_button").style.display == "block") {
+          var http = new XMLHttpRequest();
+          http.open("GET", "play.php", true);
+          http.send();
+
+          document.getElementById("play_button").style.display = "none";
+          document.getElementById("pause_button").style.display = "block";
+        }
+        else {
+          var http = new XMLHttpRequest();
+          http.open("GET", "pause.php", true);
+          http.send();
+
+          document.getElementById("play_button").style.display = "block";
+          document.getElementById("pause_button").style.display = "none";
+        }
+      }
+
+      function previous() {
+        var http = new XMLHttpRequest();
+        http.open("GET", "previous.php", true);
+        http.send();
+      }
+
+      function next() {
+        var http = new XMLHttpRequest();
+        http.open("GET", "next.php", true);
+        http.send();
+      }
+
+      function play_playlist(playlist) {
+        var http = new XMLHttpRequest();
+        http.open("GET", "change_playlist.php?playlist='" + playlist + "'", true);
+        http.send();
+
+        var http = new XMLHttpRequest();
+        http.open("GET", "play.php", true);
+        http.send();
+
+        document.getElementById("play_button").style.display = "none";
+        document.getElementById("pause_button").style.display = "block";
+      }
+    </script>
   </head>
   <body>
     
     <div class="row">
+        <div class="large-6 large-push-3 medium-6 medium-push-3 columns">
+          <div class="large-4 medium-4 columns">
+            <center>
+              <a href="#" class="small radius button" onclick="previous();">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA80lEQVRIS7WV6xFBMRhEz62AEqiAEqgElaASdKADSqACSqADszPJTMbcvJP8z57vsZsMdD5Dpf4UWAFXn04NQOI3YAkcgcMYpAZwBjbAF5gBn5YAV1wjerQckUaxN5UHxQXNHdEWOJlqd4A6CZ4cQLZ4Tgdyihwj53gdU7pkV/wCqJPkExuRKn6ZyrPFYyNyg/Q0iR31eqidUAcC3IGF8fnaF6ZSgO4J8gYmxpKyZtaJ7UBiWrI6KYKkAP4hzW1qR9I1aMWQ1BG5i7WPnSwrZ3lf0lgOQm6xz3UUUtKBBbuQeesPx2bEBrHLl2kh3T79pET/AHB2MhkxQ4qKAAAAAElFTkSuQmCC" width="24" height="24">
+              </a>
+            </center>
+          </div>
+          <div class="large-4 medium-4 columns">
+            <center>
+              <a id="play_pause_button" href="#" class="small radius button" onclick="toggle_play_pause();">
+                <img id="play_button" style="display: block" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA1klEQVRIS7WW7Q3CMAxEXzdlBNgANoANYAPYADYoG8AGMAHokC2BFJqPOv5d3YvvHKcDnWvorE8KcAYWwC0CngK8THgLbIDHHNAUQLoSXwKHVkgO4LojsAJkX1WVAlz0aKDifGoBbpvy2ZXk0wLwbtTFOpfPHICDlIumLZlPBMBBe8vnZ6wjAd/5qKNPRQOegAZA2YQDdBl1KcMtutiJw0O+m7DC/VstGbjP8jq7CGsBJ/M5fFVcTTh82ckOTcakz60ZaJlpnrM+1wK6P5lVD0ru4+5/FW9SvjwZoY64xAAAAABJRU5ErkJggg==" width="24" height="24">
+                <img id="pause_button" style="display: none" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAATUlEQVRIS2NkoDFgpLH5DHS34D8eH6E7hii1ZGmCOmLUAozYICs4ydI0Gge4sgJZwUmWptE4GI0DUAjAE89oKiKYIOheZVK9DUBzHwAAqn8kGX+cB3MAAAAASUVORK5CYII=" width="24" height="24">
+              </a>
+            </center>
+          </div>
+          <div class="large-4 medium-4 columns">
+            <center>
+              <a href="#" class="small radius button" onclick="next();">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA8UlEQVRIS7WV4Q0BQRCFv6uAEqiAEuhAB6jEqQSVUAIVUAIdyEt2kyOxMzvu9u8m75t5+2a2YeDTGPor4AI8o3WUAC2wA67AMgopAcbAAxgBR2Ab6cKyaJ4sCkMsgIruQvaArHMfD0BiG+CQVGWVLHMdLyAMqQEIkpOl2CpZSljx1AIkJnvWKbYmJAL4hkxLMxIFaEY04TNrEP8BnFOEb8DiVxdRQH6HFzDp26KuuCovJqm2gxxTVW6KKw01gNA0ewEhcW8HWnZKjKLZ+7Lrip/S0rO2w8e99eHcU+UhccuinJjiIFntWI886KdvFee6fwODkzYZDujneAAAAABJRU5ErkJggg==" width="24" height="24">
+              </a>
+            </center>
+          </div>
+        </div>
+    </div>
+    
+    <div class="row">
       <div class="large-12 columns">
-        <h1>Welcome to Foundation</h1>
+        <center>
+          <h1>MIDI Piano Player</h1>
+          <h3>Playlists</h3>
+        </center>
       </div>
     </div>
     
     <div class="row">
       <div class="large-12 columns">
-        <div class="panel">
-          <h3>We&rsquo;re stoked you want to try Foundation! </h3>
-          <p>To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.</p>
-          <p>Once you've exhausted the fun in this document, you should check out:</p>
-          <div class="row">
-            <div class="large-4 medium-4 columns">
-              <p><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</p>
-            </div>
-            <div class="large-4 medium-4 columns">
-              <p><a href="http://zurb.com/university/code-skills">Foundation Code Skills</a><br />These online courses offer you a chance to better understand how Foundation works and how you can master it to create awesome projects.</p>
-            </div>
-            <div class="large-4 medium-4 columns">
-              <p><a href="http://foundation.zurb.com/forum">Foundation Forum</a><br />Join the Foundation community to ask a question or show off your knowlege.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-4 medium-4 medium-push-2 columns">
-              <p><a href="http://github.com/zurb/foundation">Foundation on Github</a><br />Latest code, issue reports, feature requests and more.</p>
-            </div>
-            <div class="large-4 medium-4 medium-pull-2 columns">
-              <p><a href="https://twitter.com/ZURBfoundation">@zurbfoundation</a><br />Ping us on Twitter if you have questions. When you build something with this we'd love to see it (and send you a totally boss sticker).</p>
-            </div>        
-          </div>
+        <div class="large-4 medium-4 columns">
+          <center>
+            <a href="#" class="small radius button" onclick="play_playlist('classics');">Classics</a>
+          </center>
         </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="large-8 medium-8 columns">
-        <h5>Here&rsquo;s your basic grid:</h5>
-        <!-- Grid Example -->
-
-        <div class="row">
-          <div class="large-12 columns">
-            <div class="callout panel">
-              <p><strong>This is a twelve column section in a row.</strong> Each of these includes a div.panel element so you can see where the columns are - it's not required at all for the grid.</p>
-            </div>
-          </div>
+        <div class="large-4 medium-4 columns">
+          <center>
+            <a href="#" class="small radius button" onclick="play_playlist('holidays');">Holidays</a>
+          </center>
         </div>
-        <div class="row">
-          <div class="large-6 medium-6 columns">
-            <div class="callout panel">
-              <p>Six columns</p>
-            </div>
-          </div>
-          <div class="large-6 medium-6 columns">
-            <div class="callout panel">
-              <p>Six columns</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="large-4 medium-4 small-4 columns">
-            <div class="callout panel">
-              <p>Four columns</p>
-            </div>
-          </div>
-          <div class="large-4 medium-4 small-4 columns">
-            <div class="callout panel">
-              <p>Four columns</p>
-            </div>
-          </div>
-          <div class="large-4 medium-4 small-4 columns">
-            <div class="callout panel">
-              <p>Four columns</p>
-            </div>
-          </div>
-        </div>
-        
-        <hr />
-                
-        <h5>We bet you&rsquo;ll need a form somewhere:</h5>
-        <form>
-          <div class="row">
-            <div class="large-12 columns">
-              <label>Input Label</label>
-              <input type="text" placeholder="large-12.columns" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-4 medium-4 columns">
-              <label>Input Label</label>
-              <input type="text" placeholder="large-4.columns" />
-            </div>
-            <div class="large-4 medium-4 columns">
-              <label>Input Label</label>
-              <input type="text" placeholder="large-4.columns" />
-            </div>
-            <div class="large-4 medium-4 columns">
-              <div class="row collapse">
-                <label>Input Label</label>
-                <div class="small-9 columns">
-                  <input type="text" placeholder="small-9.columns" />
-                </div>
-                <div class="small-3 columns">
-                  <span class="postfix">.com</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-12 columns">
-              <label>Select Box</label>
-              <select>
-                <option value="husker">Husker</option>
-                <option value="starbuck">Starbuck</option>
-                <option value="hotdog">Hot Dog</option>
-                <option value="apollo">Apollo</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-6 medium-6 columns">
-              <label>Choose Your Favorite</label>
-              <input type="radio" name="pokemon" value="Red" id="pokemonRed"><label for="pokemonRed">Radio 1</label>
-              <input type="radio" name="pokemon" value="Blue" id="pokemonBlue"><label for="pokemonBlue">Radio 2</label>
-            </div>
-            <div class="large-6 medium-6 columns">
-              <label>Check these out</label>
-              <input id="checkbox1" type="checkbox"><label for="checkbox1">Checkbox 1</label>
-              <input id="checkbox2" type="checkbox"><label for="checkbox2">Checkbox 2</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-12 columns">
-              <label>Textarea Label</label>
-              <textarea placeholder="small-12.columns"></textarea>
-            </div>
-          </div>
-        </form>
-      </div>     
-
-      <div class="large-4 medium-4 columns">
-        <h5>Try one of these buttons:</h5>
-        <p><a href="#" class="small button">Simple Button</a><br/>
-        <a href="#" class="small radius button">Radius Button</a><br/>
-        <a href="#" class="small round button">Round Button</a><br/>            
-        <a href="#" class="medium success button">Success Btn</a><br/>
-        <a href="#" class="medium alert button">Alert Btn</a><br/>
-        <a href="#" class="medium secondary button">Secondary Btn</a></p>           
-        <div class="panel">
-          <h5>So many components, girl!</h5>
-          <p>A whole kitchen sink of goodies comes with Foundation. Check out the docs to see them all, along with details on making them your own.</p>
-          <a href="http://foundation.zurb.com/docs/" class="small button">Go to Foundation Docs</a>          
+        <div class="large-4 medium-4 columns">
+          <center>
+            <a href="#" class="small radius button" onclick="play_playlist('general');">General</a>
+          </center>
         </div>
       </div>
     </div>
